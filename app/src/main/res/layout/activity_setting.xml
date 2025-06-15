@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -12,51 +11,33 @@
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/arrow_back"
         app:title="@string/Setting"
-        app:titleTextColor="@color/black"
         app:titleTextAppearance="@style/MyToolbarTitleTextAppearance"
         app:contentInsetStartWithNavigation="0dp" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/paddingHorizontal_setting"
-        android:paddingVertical="@dimen/paddingVertical_setting"
         android:text="@string/Dark"
-        android:textSize="@dimen/text_size_setting"
         app:thumbTint="@color/switch_thumb_selector"
         app:trackTint="@color/switch_track_selector"
-         />
+        style="@style/StyleStringSetting" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/share"
         android:drawableEnd="@drawable/share"
-        android:paddingHorizontal="@dimen/paddingHorizontal_setting"
-        android:paddingVertical="@dimen/paddingVertical_setting"
         android:text="@string/Share"
-        android:textSize="@dimen/text_size_setting"
-        android:textColor="@color/black"/>
+        style="@style/StyleStringSetting"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/support"
         android:drawableEnd="@drawable/support"
-        android:paddingHorizontal="@dimen/paddingHorizontal_setting"
-        android:paddingVertical="@dimen/paddingVertical_setting"
         android:text="@string/Support"
-        android:textSize="@dimen/text_size_setting"
-        android:textColor="@color/black"/>
+        style="@style/StyleStringSetting"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/agreement"
         android:drawableEnd="@drawable/arrow_forward"
-        android:paddingHorizontal="@dimen/paddingHorizontal_setting"
-        android:paddingVertical="@dimen/paddingVertical_setting"
         android:text="@string/user_agreement"
-        android:textSize="@dimen/text_size_setting"
-        android:textColor="@color/black"/>
+        style="@style/StyleStringSetting"/>
 
 </LinearLayout>
