@@ -21,13 +21,13 @@
         android:id="@+id/button_search"
         android:layout_marginTop="20dp"
         android:text="@string/Search"
-        app:icon="@drawable/search"
+        app:icon="@drawable/ic_search_19"
         style="@style/StyleButtonMain" />
 
     <Button
         android:id="@+id/button_library"
         android:text="@string/Media"
-        app:icon="@drawable/library"
+        app:icon="@drawable/ic_library_24"
         style="@style/StyleButtonMain"/>
 
     <Button
@@ -35,5 +35,5 @@
         style="@style/StyleButtonMain"
         android:layout_marginBottom="28dp"
         android:text="@string/Setting"
-        app:icon="@drawable/settings" />
+        app:icon="@drawable/ic_settings_24" />
 </LinearLayout>

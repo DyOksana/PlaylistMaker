@@ -10,5 +10,6 @@
     <color name="blue_light">#9FBBF3</color>
     <color name="color_icon">#FFFFFFFF</color>
     <color name="text_gray_white">#FFFFFFFF</color>
-    <color name="blue_black">#FF000000</color>
+    <color name="blue_black">#1A1B22</color>
+    <color name="clear">#1A1B22</color>
 </resources>

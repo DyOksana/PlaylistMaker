@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/LinearLayoutSetting"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/arrow_back"
+        app:navigationIcon="@drawable/ic_arrow_back_24"
         app:title="@string/Setting"
         app:titleTextAppearance="@style/MyToolbarTitleTextAppearance"
         app:contentInsetStartWithNavigation="0dp" />
@@ -24,19 +23,19 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/share"
-        android:drawableEnd="@drawable/share"
+        android:drawableEnd="@drawable/ic_share_24"
         android:text="@string/Share"
         style="@style/StyleStringSetting"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/support"
-        android:drawableEnd="@drawable/support"
+        android:drawableEnd="@drawable/ic_support_24"
         android:text="@string/Support"
         style="@style/StyleStringSetting"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/agreement"
-        android:drawableEnd="@drawable/arrow_forward"
+        android:drawableEnd="@drawable/ic_arrow_forward_24"
         android:text="@string/user_agreement"
         style="@style/StyleStringSetting"/>
 

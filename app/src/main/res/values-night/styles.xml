@@ -48,4 +48,10 @@
         <item name="android:drawableTint">@color/black</item>
     </style>
 
+    <style name="LinearLayoutSetting">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/dark_blue</item>
+    </style>
+
 </resources>

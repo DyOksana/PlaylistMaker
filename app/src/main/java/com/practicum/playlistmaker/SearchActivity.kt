@@ -41,6 +41,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
+                textSearch = inputEditText.text.toString()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -73,7 +74,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val PRODUCT_AMOUNT = "PRODUCT_AMOUNT"
-        const val AMOUNT_DEF = ""
+        private const val PRODUCT_AMOUNT = "PRODUCT_AMOUNT"
+        private const val AMOUNT_DEF = ""
     }
 }
