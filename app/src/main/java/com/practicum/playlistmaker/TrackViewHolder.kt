@@ -1,17 +1,25 @@
 package com.practicum.playlistmaker
 
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import java.util.Date
+import java.util.Locale
 
 
-class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class TrackViewHolder(parent: ViewGroup) :
+    RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context)
+        .inflate(R.layout.track_view, parent, false)) {
 
     private val trackNameView: TextView = itemView.findViewById(R.id.textTrackName)
     private val artistNameView: TextView = itemView.findViewById(R.id.textArtistName)
@@ -29,7 +37,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         trackNameView.text = element.trackName
         artistNameView.text = element.artistName
-        trackTimeView.text = element.trackTime
+        trackTimeView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(element.trackTime.toLong())
 
         Glide.with(imageTrackURLView.context)
             .load(element.artworkUrl100)

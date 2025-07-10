@@ -25,6 +25,18 @@
         <item name="android:textFontWeight">500</item>
     </style>
 
+    <style name="StyleButtonUpdate">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/dark_blue_white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/white_dark_blue</item>
+        <item name="android:textSize">@dimen/text_size_noInternet</item>
+        <item name="cornerRadius">54dp</item>
+        <item name="android:fontFamily">@font/ys_text_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
     <style name="StyleStringSetting">
         <item name="android:paddingHorizontal">@dimen/paddingHorizontal_setting</item>
         <item name="android:paddingVertical">@dimen/paddingVertical_setting</item>
@@ -40,6 +52,13 @@
     <style name="TitleTextStyle">
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="NothingTextStyle">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textColor">@color/dark_blue_white</item>
+        <item name="android:textSize">@dimen/text_size_nothing</item>
     </style>
 
     <style name="EditTextSetting">

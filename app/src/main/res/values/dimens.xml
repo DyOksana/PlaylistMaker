@@ -3,6 +3,8 @@
     <dimen name="text_size">22sp</dimen>
     <dimen name="text_size_setting">16sp</dimen>
     <dimen name="text_size_track">12sp</dimen>
+    <dimen name="text_size_nothing">20sp</dimen>
+    <dimen name="text_size_noInternet">14sp</dimen>
     <dimen name="paddingVertical_setting">20dp</dimen>
     <dimen name="paddingHorizontal_setting">16dp</dimen>
 </resources>
