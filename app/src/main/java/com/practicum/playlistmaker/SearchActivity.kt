@@ -32,7 +32,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var nothingSearch: LinearLayout
     private lateinit var trackList: RecyclerView
     private lateinit var inputEditText: EditText
-    var lastQuery: String = ""
+    private var lastQuery: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -126,9 +126,10 @@ class SearchActivity : AppCompatActivity() {
                     call: Call<TrackResponse>,
                     response: Response<TrackResponse>
                 ) {
-                    if (response.code() == 200) {
+                    if (response.isSuccessful) {
                         tracks.clear()
-                        if (response.body()?.results?.isNotEmpty() == true) {
+                        val results = response.body()?.results
+                        if (results != null) {
                             trackList.visibility = View.VISIBLE
                             nothingSearch.visibility = View.GONE
                             noInternet.visibility = View.GONE
