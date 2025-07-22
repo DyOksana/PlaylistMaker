@@ -26,6 +26,8 @@
             android:id="@+id/inputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:background="@null"
             android:drawableStart="@drawable/ic_search_loupe_16"
             android:drawablePadding="8dp"
@@ -47,6 +49,59 @@
             android:layout_margin="10dp"
             android:visibility="gone"/>
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/nothingSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="102dp"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_nothing_120"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_nothing"
+            style="@style/NothingTextStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/noInternet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="102dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_no_internet_120" />
+
+        <TextView
+            style="@style/NothingTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/text_no_internet" />
+
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:text="@string/text_update"
+            android:layout_marginTop="24dp"
+            style="@style/StyleButtonUpdate" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trackList"
