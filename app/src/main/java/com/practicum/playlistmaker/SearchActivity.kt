@@ -13,6 +13,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -91,17 +93,10 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setOnFocusChangeListener { _, hasFocus ->
             youSearch.visibility = if (hasFocus && inputEditText.text.isEmpty() && historyTracks.isNotEmpty()) View.VISIBLE else View.GONE
         }
-        inputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                youSearch.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true && historyTracks.isNotEmpty()) View.VISIBLE else View.GONE
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
+        inputEditText.doOnTextChanged{ text, _, _, _ ->
+            youSearch.isVisible = inputEditText.hasFocus() && text?.isEmpty() == true && historyTracks.isNotEmpty()
+        }
 
         adapter.tracks = tracks
         trackList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -118,7 +113,7 @@ class SearchActivity : AppCompatActivity() {
         buttonClearHistory.setOnClickListener{
             searchHistory.removeHistory()
             adapterHistory.notifyDataSetChanged()
-            youSearch.visibility = View.GONE
+            youSearch.isVisible = false
         }
 
         clearButton.setOnClickListener {
