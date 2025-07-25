@@ -1,10 +1,10 @@
 package com.practicum.playlistmaker
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -12,11 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -31,28 +27,83 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var noInternet: LinearLayout
     private lateinit var nothingSearch: LinearLayout
     private lateinit var trackList: RecyclerView
+    private lateinit var trackListHistory: RecyclerView
     private lateinit var inputEditText: EditText
+    private lateinit var youSearch: LinearLayout
+    private lateinit var buttonClearHistory: Button
+    private lateinit var clearButton: ImageView
+    private lateinit var buttonArrowBack: MaterialToolbar
     private var lastQuery: String = ""
+    private val iTunesBaseUrl = "https://itunes.apple.com/"
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(iTunesBaseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    private val iTunesService = retrofit.create(ITunesAPI::class.java)
+
+    private lateinit var prefs: SharedPreferences
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var adapter: TrackAdapter
+    private lateinit var adapterHistory: TrackAdapter
+    private lateinit var listener: SharedPreferences.OnSharedPreferenceChangeListener
+    private val tracks = ArrayList<Track>()
+
+    private var textSearch: String = AMOUNT_DEF
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+        searchHistory = SearchHistory(prefs)
+        adapter = TrackAdapter(searchHistory)
+        adapterHistory = TrackAdapter(searchHistory)
 
-        val buttonArrowBack = findViewById<MaterialToolbar>(R.id.search)
-
+        buttonArrowBack = findViewById(R.id.search)
         buttonArrowBack.setNavigationOnClickListener {
             finish()
         }
 
-        inputEditText = findViewById<EditText>(R.id.inputEditText)
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
-        trackList = findViewById<RecyclerView>(R.id.trackList)
-        nothingSearch = findViewById<LinearLayout>(R.id.nothingSearch)
-        noInternet = findViewById<LinearLayout>(R.id.noInternet)
-        buttonUpdate = findViewById<Button>(R.id.buttonUpdate)
+        inputEditText = findViewById(R.id.inputEditText)
+        clearButton = findViewById(R.id.clearIcon)
+        trackList = findViewById(R.id.trackList)
+        trackListHistory = findViewById(R.id.trackListHistory)
+        nothingSearch = findViewById(R.id.nothingSearch)
+        noInternet = findViewById(R.id.noInternet)
+        buttonUpdate = findViewById(R.id.buttonUpdate)
+
+        youSearch = findViewById(R.id.youSearch)
+        buttonClearHistory = findViewById(R.id.buttonClearHistory)
+
+        var historyTracks = searchHistory.readPreferences()
+        adapterHistory.tracks = historyTracks.toMutableList()
+        trackListHistory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        trackListHistory.adapter = adapterHistory
+
+        listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == HISTORY_KEY) {
+                historyTracks = searchHistory.readPreferences()
+                adapterHistory.tracks = historyTracks.toMutableList()
+                adapterHistory.notifyDataSetChanged()
+            }
+        }
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+
+        inputEditText.setOnFocusChangeListener { _, hasFocus ->
+            youSearch.visibility = if (hasFocus && inputEditText.text.isEmpty() && historyTracks.isNotEmpty()) View.VISIBLE else View.GONE
+        }
+        inputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                youSearch.visibility = if (inputEditText.hasFocus() && p0?.isEmpty() == true && historyTracks.isNotEmpty()) View.VISIBLE else View.GONE
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
 
         adapter.tracks = tracks
-
         trackList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         trackList.adapter = adapter
 
@@ -64,8 +115,15 @@ class SearchActivity : AppCompatActivity() {
             false
         }
 
+        buttonClearHistory.setOnClickListener{
+            searchHistory.removeHistory()
+            adapterHistory.notifyDataSetChanged()
+            youSearch.visibility = View.GONE
+        }
+
         clearButton.setOnClickListener {
             tracks.clear()
+            trackList.visibility = View.GONE
             adapter.notifyDataSetChanged()
             inputEditText.setText("")
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -95,22 +153,8 @@ class SearchActivity : AppCompatActivity() {
             textSearch = savedInstanceState.getString(PRODUCT_AMOUNT, AMOUNT_DEF)
             inputEditText.setText(textSearch)
         }
-
-
     }
-    private val iTunesBaseUrl = "https://itunes.apple.com/"
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(iTunesBaseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    private val iTunesService = retrofit.create(ITunesAPI::class.java)
 
-
-    private val tracks = ArrayList<Track>()
-
-    private val adapter = TrackAdapter()
-
-    private var textSearch: String = AMOUNT_DEF
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -170,6 +214,11 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         private const val PRODUCT_AMOUNT = "PRODUCT_AMOUNT"
         private const val AMOUNT_DEF = ""
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        prefs.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
 }

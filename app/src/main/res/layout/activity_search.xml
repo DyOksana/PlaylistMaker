@@ -106,8 +106,43 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trackList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height = "0dp"
+        android:layout_weight = "1"
         android:layout_marginTop="24dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/youSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:visibility="gone">
+
+    <TextView
+        style="@style/TextSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_history"
+        android:gravity="center_horizontal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trackListHistory"
+        android:layout_width="match_parent"
+        android:layout_height = "0dp"
+        android:layout_weight = "1"
+        android:layout_marginTop="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <Button
+        android:id="@+id/buttonClearHistory"
+        android:text="@string/text_clear_history"
+        android:layout_marginTop="24dp"
+        style="@style/StyleButtonUpdate"
+        android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
 </LinearLayout>
 

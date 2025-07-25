@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textview.MaterialTextView
 
 class SettingsActivity : AppCompatActivity() {
@@ -16,6 +17,18 @@ class SettingsActivity : AppCompatActivity() {
 
         buttonArrowBack.setNavigationOnClickListener {
             finish()
+        }
+
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
+        val sharedPrefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+
+        themeSwitcher.setChecked(sharedPrefs.getBoolean(THEME_KEY, false))
+
+        themeSwitcher.setOnCheckedChangeListener { _, checked ->
+            (applicationContext as App).switchTheme(checked)
+            sharedPrefs.edit()
+                .putBoolean(THEME_KEY, checked)
+                .apply()
         }
 
         val buttonShare = findViewById<MaterialTextView>(R.id.share)
