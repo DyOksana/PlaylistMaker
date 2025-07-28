@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -57,8 +58,32 @@ class SearchActivity : AppCompatActivity() {
 
         prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
         searchHistory = SearchHistory(prefs)
-        adapter = TrackAdapter(searchHistory)
-        adapterHistory = TrackAdapter(searchHistory)
+        adapter = TrackAdapter(searchHistory) { track ->
+            val intent = Intent(this, AudioPlayerActivity::class.java).apply {
+                putExtra("artworkUrl100", track.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
+                putExtra("textTrackName", track.trackName)
+                putExtra("textArtistName", track.artistName)
+                putExtra("textTrackTime", track.trackTime)
+                putExtra("textCollectionName", track.collectionName)
+                putExtra("textReleaseDate", track.releaseDate)
+                putExtra("textPrimaryGenreName", track.primaryGenreName)
+                putExtra("textCountry", track.country)
+            }
+            startActivity(intent)
+        }
+        adapterHistory = TrackAdapter(searchHistory){ track ->
+            val intent = Intent(this, AudioPlayerActivity::class.java).apply {
+                putExtra("artworkUrl100", track.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
+                putExtra("textTrackName", track.trackName)
+                putExtra("textArtistName", track.artistName)
+                putExtra("textTrackTime", track.trackTime)
+                putExtra("textCollectionName", track.collectionName)
+                putExtra("textReleaseDate", track.releaseDate)
+                putExtra("textPrimaryGenreName", track.primaryGenreName)
+                putExtra("textCountry", track.country)
+            }
+            startActivity(intent)
+        }
 
         buttonArrowBack = findViewById(R.id.search)
         buttonArrowBack.setNavigationOnClickListener {
