@@ -14,4 +14,5 @@
     <color name="blue_black">#1A1B22</color>
     <color name="clear">#1A1B22</color>
     <color name="white_dark_blue">#1A1B22</color>
+    <color name="dark_blue_transparent">#40FFFFFF</color>
 </resources>

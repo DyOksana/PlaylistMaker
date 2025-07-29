@@ -8,10 +8,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="@drawable/ic_arrow_back_24"
         app:title="@string/Setting"
-        app:titleTextAppearance="@style/MyToolbarTitleTextAppearance"
-        app:contentInsetStartWithNavigation="0dp" />
+        app:titleTextAppearance="@style/MyToolbarTitleTextAppearance" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:layout_marginTop="24dp"

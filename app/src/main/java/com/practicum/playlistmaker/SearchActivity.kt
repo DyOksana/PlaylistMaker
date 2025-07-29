@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -57,8 +58,32 @@ class SearchActivity : AppCompatActivity() {
 
         prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
         searchHistory = SearchHistory(prefs)
-        adapter = TrackAdapter(searchHistory)
-        adapterHistory = TrackAdapter(searchHistory)
+        adapter = TrackAdapter(searchHistory) { track ->
+            val intent = Intent(this, AudioPlayerActivity::class.java).apply {
+                putExtra(Constants.KEY_ARTWORK_URL, track.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
+                putExtra(Constants.KEY_TRACK_NAME, track.trackName)
+                putExtra(Constants.KEY_ARTIST_NAME, track.artistName)
+                putExtra(Constants.KEY_TRACK_TIME, track.trackTime)
+                putExtra(Constants.KEY_COLLECTION_NAME, track.collectionName)
+                putExtra(Constants.KEY_RELEASE_DATE, track.releaseDate)
+                putExtra(Constants.KEY_PRIMARY_GENRE, track.primaryGenreName)
+                putExtra(Constants.KEY_COUNTRY, track.country)
+            }
+            startActivity(intent)
+        }
+        adapterHistory = TrackAdapter(searchHistory){ track ->
+            val intent = Intent(this, AudioPlayerActivity::class.java).apply {
+                putExtra(Constants.KEY_ARTWORK_URL, track.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
+                putExtra(Constants.KEY_TRACK_NAME, track.trackName)
+                putExtra(Constants.KEY_ARTIST_NAME, track.artistName)
+                putExtra(Constants.KEY_TRACK_TIME, track.trackTime)
+                putExtra(Constants.KEY_COLLECTION_NAME, track.collectionName)
+                putExtra(Constants.KEY_RELEASE_DATE, track.releaseDate)
+                putExtra(Constants.KEY_PRIMARY_GENRE, track.primaryGenreName)
+                putExtra(Constants.KEY_COUNTRY, track.country)
+            }
+            startActivity(intent)
+        }
 
         buttonArrowBack = findViewById(R.id.search)
         buttonArrowBack.setNavigationOnClickListener {
